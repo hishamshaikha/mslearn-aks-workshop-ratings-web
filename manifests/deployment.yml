@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: hishamshaikhamslearnaksworkshopratingsweb 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hishamshaikhamslearnaksworkshopratingsweb
+  template:
+    metadata:
+      labels:
+        app: hishamshaikhamslearnaksworkshopratingsweb 
+    spec:
+      containers:
+        - name: hishamshaikhamslearnaksworkshopratingsweb 
+          image: acr8763.azurecr.io/hishamshaikhamslearnaksworkshopratingsweb
+          ports:
+          - containerPort: 8080
