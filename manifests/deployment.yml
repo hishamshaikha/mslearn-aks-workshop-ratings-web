@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: ratingsweb 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ratingsweb
+  template:
+    metadata:
+      labels:
+        app: ratingsweb 
+    spec:
+      containers:
+        - name: ratingsweb 
+          image: acr8763.azurecr.io/ratingsweb
+          ports:
+          - containerPort: 8080
