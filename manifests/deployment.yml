@@ -1,19 +1,29 @@
-apiVersion : apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ratingsweb 
+  name: ratings-web
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: ratingsweb
+      app: ratings-web
   template:
     metadata:
       labels:
-        app: ratingsweb 
+        app: ratings-web # the label for the pods and the deployments
     spec:
       containers:
-        - name: ratingsweb 
-          image: acr8763.azurecr.io/ratingsweb
-          ports:
-          - containerPort: 8080
+      - name: ratings-web
+        image: acr8763.azurecr.io/ratingsweb # IMPORTANT: update with your own repository
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080 # the application listens to this port
+        env:
+        - name: API # the application expects to connect to the API at this endpoint
+          value: http://ratings-api.ratingsapp.svc.cluster.local
+        resources:
+          requests: # minimum resources required
+            cpu: 250m
+            memory: 64Mi
+          limits: # maximum resources allocated
+            cpu: 500m
+            memory: 512Mi 
