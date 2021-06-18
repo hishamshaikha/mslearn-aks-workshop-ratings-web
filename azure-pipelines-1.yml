@@ -78,9 +78,7 @@ stages:
                 $(containerRegistry)/$(imageRepository):$(tag)
 
 
-- task: ManualValidation@0
-  inputs:
-    notifyUsers: 'hisham.shaikha@bespinglobal.ae'
+
 
 
 - stage: Deploy
@@ -97,6 +95,9 @@ stages:
       runOnce:
         deploy:
           steps:
+          - task: ManualIntervention@8
+            inputs:
+              emailRecipients: 'hisham.shaikha@bespinglobal.ae'
           - task: KubernetesManifest@0
             displayName: Create imagePullSecret
             inputs:
