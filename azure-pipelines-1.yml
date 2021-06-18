@@ -45,7 +45,7 @@ stages:
       artifact: manifests
 
 - stage: Deploy
-  displayName: Deploy stage
+  displayName: Staging Deploy
   dependsOn: Build
 
   jobs:
@@ -76,4 +76,43 @@ stages:
                 $(imagePullSecret)
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
+
+
+
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Deploy
+
+  jobs:
+  - deployment: Deploy
+    displayName: Production Deploy
+    pool:
+      vmImage: $(vmImageName)
+    environment: 'hishamshaikhamslearnaksworkshopratingsweb-1244.ratingsapp-prod'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: KubernetesManifest@0
+            displayName: Create imagePullSecret
+            inputs:
+              action: createSecret
+              secretName: $(imagePullSecret)
+              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+
+          - task: KubernetesManifest@0
+            displayName: Deploy to Kubernetes cluster
+            inputs:
+              action: deploy
+              manifests: |
+                $(Pipeline.Workspace)/manifests/deployment.yml
+                $(Pipeline.Workspace)/manifests/service.yml
+              imagePullSecrets: |
+                $(imagePullSecret)
+              containers: |
+                $(containerRegistry)/$(imageRepository):$(tag)
+
+
+
 
