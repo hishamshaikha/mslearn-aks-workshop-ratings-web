@@ -80,16 +80,17 @@ stages:
 
 
 
+
 - stage: Deploy
   displayName: Deploy stage
-  dependsOn: StagingDeploy
+  dependsOn: Build
 
   jobs:
   - deployment: Deploy
-    displayName: Production Deploy
+    displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'ratingsapp-prod'
+    environment: 'hishamshaikhamslearnaksworkshopratingsweb-1145.ratingsapp-prod'
     strategy:
       runOnce:
         deploy:
@@ -112,6 +113,7 @@ stages:
                 $(imagePullSecret)
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
+
 
 
 
