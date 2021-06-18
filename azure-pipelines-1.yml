@@ -44,7 +44,7 @@ stages:
     - upload: manifests
       artifact: manifests
 
-- stage: Deploy
+- stage: StagingDeploy
   displayName: Staging Deploy
   dependsOn: Build
 
@@ -82,7 +82,7 @@ stages:
 
 - stage: Deploy
   displayName: Deploy stage
-  dependsOn: Deploy
+  dependsOn: StagingDeploy
 
   jobs:
   - deployment: Deploy
