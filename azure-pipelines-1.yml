@@ -78,7 +78,9 @@ stages:
                 $(containerRegistry)/$(imageRepository):$(tag)
 
 
-
+- task: ManualValidation@0
+  inputs:
+    notifyUsers: 'hisham.shaikha@bespinglobal.ae'
 
 
 - stage: Deploy
