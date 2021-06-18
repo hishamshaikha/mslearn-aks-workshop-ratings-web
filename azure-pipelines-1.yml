@@ -89,7 +89,7 @@ stages:
     displayName: Production Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'hishamshaikhamslearnaksworkshopratingsweb-1244.ratingsapp-prod'
+    environment: 'ratingsapp-prod'
     strategy:
       runOnce:
         deploy:
