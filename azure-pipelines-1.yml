@@ -79,11 +79,27 @@ stages:
 
 
 
+- stage: Approval
+  displayName: Manual Approval
+  dependsOn: StagingDeploy
+  jobs:
+  - job: waitForValidation
+    displayName: Wait for external validation  
+    pool: server    
+    timeoutInMinutes: 4320 # job times out in 3 days
+    steps:   
+    - task: ManualValidation@0
+      timeoutInMinutes: 1440 # task times out in 1 day
+      inputs:
+          notifyUsers: |
+              hisham.shaikha@bespinglobal.ae
+          instructions: 'Please validate the build configuration and resume'
+          onTimeout: 'resume'
 
 
 - stage: Deploy
   displayName: Deploy stage
-  dependsOn: StagingDeploy
+  dependsOn: Approval
 
   jobs:
   - deployment: Deploy
