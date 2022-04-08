@@ -13,16 +13,13 @@ spec:
     spec:
       containers:
       - name: ratings-web
-        image: ratingapp.azurecr.io/ratingsweb # IMPORTANT: update with your own repository
+        image: ratingsapp.azurecr.io/ratings-web # IMPORTANT: update with your own repository
         imagePullPolicy: Always
         ports:
         - containerPort: 8080 # the application listens to this port
         env:
-        - name: API 
-          valueFrom:
-            secretKeyRef:
-              name: api 
-              key: API
+        - name: API # the application expects to connect to the API at this endpoint
+          value: http://ratings-api.sandbox.svc.cluster.local
         resources:
           requests: # minimum resources required
             cpu: 250m
