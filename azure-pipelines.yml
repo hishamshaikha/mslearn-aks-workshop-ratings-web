@@ -12,7 +12,7 @@ variables:
 
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'af7f2898-938f-4a3f-bdad-811ce7d8170d'
-  imageRepository: 'ratingsweb'
+  imageRepository: 'ratings-web'
   containerRegistry: 'ratingsapp.azurecr.io'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
